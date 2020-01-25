@@ -13,8 +13,13 @@ typedef struct settings_t {
     char SMBClockSource : 2;
 } settings;
 
-void I2Csettings(struct *settings_t) {
+void I2Csettings(struct settings_t *settings) {
+    SMB0CF = &settings;
+
+    if (settings.SMBSCLTimeout){
+        
+    }
     
 
-}  
+} 
 
