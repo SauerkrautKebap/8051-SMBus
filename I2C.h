@@ -19,7 +19,19 @@ void I2Csettings(struct settings_t *settings) {
     if (settings.SMBSCLTimeout){
         
     }
-    
-
 } 
+
+void ISR_SMB0(void) interrupt 7 {
+    
+}
+
+bool masterTransmit(unsigned char adress, unsigned char data[]){
+
+    STA = 1;
+
+
+
+    return 1;
+
+}
 
