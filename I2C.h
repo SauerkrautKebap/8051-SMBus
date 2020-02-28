@@ -61,9 +61,7 @@ boolean sendData(unsigned char adress, unsigned char data[]){
 
     adrbuffer = adress << 1 & 11111110;
 
-    for (int i = 0; i < data.length; i++) {
-        buffer[i] = data[i];
-    }
+    Strncpy(buffer, data, sizeof(buffer));
 
     return 1;
 }
