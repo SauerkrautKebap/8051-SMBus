@@ -1,5 +1,5 @@
 //--------------------------------------------------
-// Abkürzungen: 
+// Abkürzungen:
 // M = Master
 // S = Slave
 // T = Transmit
@@ -7,7 +7,6 @@
 //
 // Bsp.: MT = Master Transmit
 //-------------------------------------------------
-
 
 #define TIMER0  0b00;
 #define TIMER1  0b01;
@@ -35,25 +34,36 @@ typedef struct settings_t {
     char SMBClockSource : 2;
 } settings;
 
+unsigned char buffer[20];
+unsigned char adrbuffer;
+
 void I2Csettings(struct settings_t *settings) {
     SMB0CF = &settings;
 
     if (settings.SMBSCLTimeout){
-        
-    }
-} 
 
-void ISR_SMB0(void) interrupt 7 {
-    
+    }
 }
 
-bool masterTransmit(unsigned char adress, unsigned char data[]){
+void ISR_SMB0(void) interrupt 7 {
+
+    if (SMB0CN & 0xF0 == SMB_MTSTA) {
+        SMB0DAT = adrbuffer;
+        STA = 0;
+    }
+
+
+}
+
+boolean sendData(unsigned char adress, unsigned char data[]){
 
     STA = 1;
 
+    adrbuffer = adress << 1 & 11111110;
 
+    for (int i = 0; i < data.length; i++) {
+        buffer[i] = data[i];
+    }
 
     return 1;
-
 }
-
